@@ -1,7 +1,11 @@
+ARG LIBRESPOTIMAGE
+FROM ${LIBRESPOTIMAGE} as librespot-image
+
 FROM alpine:edge
 # https://github.com/s1lvester/docker-snapcast-multiroomaudio/blob/master/Dockerfile
 
 ENV TZ London/Europe
+ARG LIBRESPOT
 
 RUN apk -U upgrade -a && \
     apk add --no-cache \
@@ -14,7 +18,6 @@ RUN apk -U upgrade -a && \
     ln -s /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
     apk del tzdata
 
-
 # mounting dbus on host so avahi can work.
 VOLUME /var/run/dbus /output
 
@@ -24,7 +27,8 @@ EXPOSE 1704 1705 1780
 # Avahi port
 EXPOSE 5353
 
-COPY --from=localhost/librespot /usr/local/bin/librespot /usr/local/bin/
+
+COPY --from=librespot-image /usr/local/bin/librespot /usr/local/bin/
 #COPY --from=librespot-rpi-010320 /usr/local/bin/librespot /usr/local/bin/
 #COPY --from=snapcast-v19-alpine /usr/local/bin/snapserver /usr/local/bin/
 

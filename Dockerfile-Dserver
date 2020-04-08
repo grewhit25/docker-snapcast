@@ -1,0 +1,19 @@
+FROM ubuntu:focal
+
+
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive \
+    apt-get install -y tini avahi-daemon libavahi-client3 \
+    libvorbisenc2 flac libopus0  && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY --from=docker.io/grewhit/debian-snapcast /usr/local/bin/snapserver /usr/local/bin/
+COPY --from=docker.io/grewhit/docker-librespot /usr/local/bin/librespot /usr/local/bin/
+COPY entrypoint.sh /
+COPY asound.conf /etc/
+
+# Snapcast Ports
+EXPOSE 1704 1705
+
+ENTRYPOINT ["tini", "--", "/entrypoint.sh"]
+CMD ["snapserver"]

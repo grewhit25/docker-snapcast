@@ -1,0 +1,18 @@
+FROM ubuntu:focal
+
+
+RUN apt-get update && apt-get upgrade -y && \
+    DEBIAN_FRONTEND=noninteractive \
+    apt-get install -y tini \
+    libpulse-dev libvorbis-dev libopus-dev libasound2-plugins \
+    alsa-utils flac avahi-daemon && \
+    apt-get autoremove --purge && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY --from=localhost/snapcast-debian /usr/local/bin/snapserver /usr/local/bin/
+
+# Snapcast Ports
+EXPOSE 1704 1705
+
+ENTRYPOINT ["tini", "--"]
+CMD ["snapserver"]

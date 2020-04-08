@@ -1,0 +1,27 @@
+FROM ubuntu:focal
+
+LABEL maintainer "grewhit25@gmail.com"
+
+RUN apt-get update && apt-get upgrade -y && \
+    DEBIAN_FRONTEND=noninteractive \
+    apt-get install -y build-essential \
+    libasound2-dev libvorbisidec-dev \
+    libvorbis-dev libopus-dev libflac-dev libsoxr-dev libboost1.71-dev \
+    alsa-utils libavahi-client-dev avahi-daemon expat git && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /code
+RUN git clone --recursive https://github.com/badaix/snapcast.git src && \
+    cd src && \
+    make && \
+    cp server/snapserver client/snapclient /usr/local/bin
+
+#RUN useradd --system --uid 666 -M --shell /usr/sbin/nologin snapcast && \
+#    mkdir -p /home/snapcast/.config && \
+#    chown snapcast:snapcast -R /home
+#USER snapcast
+
+EXPOSE 1704
+
+USER root

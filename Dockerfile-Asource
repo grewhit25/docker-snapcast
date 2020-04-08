@@ -12,12 +12,10 @@ RUN apk -U add --virtual .build-deps git bash build-base asio-dev soxr-dev \
  && cd snapcast/externals \
  && git submodule update --init --recursive \
  && cd .. \
- && make -j $(grep -c ^processor /proc/cpuinfo) \
+ && make -j 2 \
  && cp server/snapserver client/snapclient /usr/local/bin \
  && cd / \
  && apk --purge del .build-deps \
  && rm -rf /etc/ssl /var/cache/apk/* /lib/apk/db/* /root/snapcast
 
 USER root
-
-
