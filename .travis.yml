@@ -19,7 +19,7 @@ before_script:
   - DOCKER_BASE=${DOCKER_REGISTRY}'/debian-snapcast'
   - DOCKERFILE='Dockerfile-Dsource'
   - source ./buildx_ci_images.sh
-  - set -ex; setup_environment::main; set +x
+  - set -ex; setup_ci_environment::main; set +x
   - set -ex; build_ci_images::main; set +x
 defaults:
   script: &1
