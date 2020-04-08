@@ -124,7 +124,6 @@ function build_ci_images::test_all() {
 
 # Setup ci environment
 function setup_ci_environment::main() {
-  cp $DOCKERFILE Dockerfile.multi-arch
   setup_ci_environment::install_docker_buildx
   setup_ci_environment::login_to_docker_hub
 }
@@ -132,8 +131,9 @@ function setup_ci_environment::main() {
 # Build images
 function build_ci_images::main() {
   # Set platforms to build.
+  cp $DOCKERFILE Dockerfile.multi-arch
   echo '** Next line need to move to env once dockerhub username updated **'
-  export DOCKER_BASE=${DOCKER_REGISTRY}/${TRAVIS_REPO_SLUG#*/}
+  #export DOCKER_BASE=${DOCKER_REGISTRY}/${TRAVIS_REPO_SLUG#*/}
   build_ci_images::build_and_push_all
   build_ci_images::test_all
 }
