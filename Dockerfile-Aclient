@@ -1,27 +1,26 @@
 FROM alpine:edge
-# https://github.com/s1lvester/docker-snapcast-multiroomaudio/blob/master/Dockerfile
+LABEL MAINTAINER="Greg White grewhit25@gmail.com"
 
 ENV TZ London/Europe
 
 RUN apk -U upgrade -a && \
     apk add --no-cache \
-    avahi-libs \
     tzdata tini bash \
     flac opus \
     libvorbis \
     alsa-plugins-pulse \
+    avahi-libs avahi dbus \
     snapcast-client \
     && \
     # setup timezone
     ln -s /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
     apk del tzdata
-    #snapcast-client \
 
 # COPY --from=snapcast-v19-alpine /usr/local/bin/snapclient /usr/local/bin/
+COPY entrypoint.sh /
 
-# alsa-lib \
 # mounting dbus on host so avahi can work.
 VOLUME /var/run/dbus
 
-ENTRYPOINT ["/sbin/tini", "--"]
+ENTRYPOINT [ "/sbin/tini", "--", "/entrypoint.sh" ]
 CMD ["snapclient"]
