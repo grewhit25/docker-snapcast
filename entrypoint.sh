@@ -1,4 +1,5 @@
-#! /bin/sh
+#!/bin/bash
+
 # set defaults
 #export SPOTIFY_NAME="${SPOTIFY_NAME:=Snapcast}"
 #export SPOTIFY_BITRATE="${SPOTIFY_BITRATE:=160}"
