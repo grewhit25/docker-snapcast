@@ -8,7 +8,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 
-COPY --from=localhost/snapcast-debian /usr/local/bin/snapclient /usr/local/bin/
+COPY --from=docker.io/grewhit/debian-snapcast /usr/local/bin/snapclient /usr/local/bin/
 COPY entrypoint.sh /
 COPY asound.conf /etc/
 
