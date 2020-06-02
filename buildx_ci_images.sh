@@ -133,9 +133,10 @@ function build_ci_images::main() {
   echo '** Next line need to move to env once dockerhub username updated **'
   #export DOCKER_BASE=${DOCKER_REGISTRY}/${TRAVIS_REPO_SLUG#*/}
   # Build server
-  export DOCKER_BASE=${DOCKER_REGISTRY}'/debian-snapcast'
-  cp Dockerfile-Dsource Dockerfile.multi-arch
-  build_ci_images::build_and_push_all
+  
+  #export DOCKER_BASE=${DOCKER_REGISTRY}'/debian-snapcast'
+  #cp Dockerfile-Dsource Dockerfile.multi-arch
+  #build_ci_images::build_and_push_all
   export DOCKER_BASE=${DOCKER_REGISTRY}'/debian-snapserver'
   cp Dockerfile-Dserver Dockerfile.multi-arch
   build_ci_images::build_and_push_all

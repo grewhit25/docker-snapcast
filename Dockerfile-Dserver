@@ -12,6 +12,8 @@ COPY --from=docker.io/grewhit/docker-librespot /usr/local/bin/librespot /usr/loc
 COPY entrypoint.sh /
 COPY asound.conf /etc/
 
+RUN chmod +x /entrypoint.sh
+
 # Snapcast Ports
 EXPOSE 1704 1705
 

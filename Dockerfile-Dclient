@@ -12,5 +12,7 @@ COPY --from=docker.io/grewhit25/debian-snapcast /usr/local/bin/snapclient /usr/l
 COPY entrypoint.sh /
 COPY asound.conf /etc/
 
+RUN chmod +x /entrypoint.sh
+
 ENTRYPOINT ["tini", "--", "/entrypoint.sh"]
 CMD ["snapclient"]
