@@ -12,10 +12,8 @@ RUN apt-get update && apt-get upgrade -y && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /code
-RUN git clone https://github.com/badaix/snapcast.git src && \
-    cd src/externals && \
-    git submodule update --init --recursive && \
-    cd ../ && \
+RUN git clone --recursive -b develop https://github.com/badaix/snapcast.git src && \
+    cd src && \
     make && \
     cp server/snapserver client/snapclient /usr/local/bin
 
