@@ -11,7 +11,6 @@ COPY --from=docker.io/grewhit25/debian-snapcast /usr/local/bin/snapserver /usr/l
 COPY --from=docker.io/grewhit/docker-librespot /usr/local/bin/librespot /usr/local/bin/
 COPY entrypoint.sh /
 COPY asound.conf /etc/
-COPY snapserver.conf /config/
 
 RUN chmod +x /entrypoint.sh
 
@@ -20,4 +19,4 @@ EXPOSE 1704 1705
 VOLUME /config
 
 ENTRYPOINT ["tini", "--", "/entrypoint.sh"]
-CMD ["snapserver", "--config", "/config/snapserver.conf"]
+CMD ["snapserver"]
