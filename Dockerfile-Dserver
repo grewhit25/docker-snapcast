@@ -18,4 +18,4 @@ RUN chmod +x /entrypoint.sh
 EXPOSE 1704 1705
 
 ENTRYPOINT ["tini", "--", "/entrypoint.sh"]
-CMD ["snapserver"]
+CMD ["snapserver --config /config/snapserver.conf"]
