@@ -2,15 +2,21 @@ FROM ubuntu:focal as builder
 
 LABEL maintainer "grewhit25@gmail.com"
 
-RUN apt-get update && apt-get upgrade -y && \
+RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive \
-    apt-get install -y build-essential \
+    apt-get install -y build-essential go \
     libasound2-dev libvorbisidec-dev \
     libvorbis-dev libopus-dev libflac-dev libsoxr-dev libboost1.71-dev \
     alsa-utils libavahi-client-dev avahi-daemon expat git && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Install Healthz https://github.com/renan/healthz-proxy
+WORKDIR /usr/src/app
+COPY healthz.go .
+RUN go build -o healthz .
+
+# Install Snapcast
 WORKDIR /code
 RUN git clone --recursive -b develop https://github.com/badaix/snapcast.git src && \
     cd src && \
@@ -22,7 +28,8 @@ FROM ubuntu:focal
 
 COPY --from=builder /usr/local/bin/snapserver /usr/local/bin/
 COPY --from=builder /usr/local/bin/snapclient /usr/local/bin/
-    
+COPY --from=builder /usr/src/app/healthz /usr/local/bin/
+
 #RUN useradd --system --uid 666 -M --shell /usr/sbin/nologin snapcast && \
 #    mkdir -p /home/snapcast/.config && \
 #    chown snapcast:snapcast -R /home

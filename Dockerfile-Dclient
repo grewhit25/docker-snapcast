@@ -9,6 +9,7 @@ RUN apt-get update && \
 
 
 COPY --from=docker.io/grewhit25/debian-snapcast /usr/local/bin/snapclient /usr/local/bin/
+COPY --from=docker.io/grewhit25/debian-snapcast /usr/local/bin/healthz /usr/local/bin/
 COPY entrypoint.sh /
 COPY asound.conf /etc/
 
