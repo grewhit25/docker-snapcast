@@ -8,7 +8,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 COPY --from=docker.io/grewhit25/debian-snapcast /usr/local/bin/snapserver /usr/local/bin/
-COPY --from=docker.io/grewhit25/debian-snapcast /usr/local/bin/healthz /usr/local/bin/
+COPY --from=docker.io/grewhit25/debian-snapcast /usr/local/bin/healthz /
 COPY --from=docker.io/grewhit/docker-librespot /usr/local/bin/librespot /usr/local/bin/
 COPY entrypoint.sh /
 COPY *.conf /etc/
