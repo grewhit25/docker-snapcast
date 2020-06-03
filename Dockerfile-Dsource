@@ -4,7 +4,7 @@ LABEL maintainer "grewhit25@gmail.com"
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive \
-    apt-get install -y build-essential go \
+    apt-get install -y build-essential golang \
     libasound2-dev libvorbisidec-dev \
     libvorbis-dev libopus-dev libflac-dev libsoxr-dev libboost1.71-dev \
     alsa-utils libavahi-client-dev avahi-daemon expat git && \
