@@ -1,21 +1,20 @@
-FROM alpine:edge
-
-ENV TZ London/Europe
-WORKDIR /data
+FROM alpine:edge as builder
 
 # Create server client from source
 
-RUN apk -U add --virtual .build-deps git bash build-base asio-dev soxr-dev \
-    avahi-dev flac-dev libvorbis-dev alsa-lib-dev opus opus-dev \
- && cd /root \
- && git clone https://github.com/badaix/snapcast.git \
- && cd snapcast/externals \
- && git submodule update --init --recursive \
- && cd .. \
- && make -j 2 \
- && cp server/snapserver client/snapclient /usr/local/bin \
- && cd / \
- && apk --purge del .build-deps \
- && rm -rf /etc/ssl /var/cache/apk/* /lib/apk/db/* /root/snapcast
+RUN apk -U add git bash build-base asio-dev soxr-dev \
+    avahi-dev flac-dev libvorbis-dev alsa-lib-dev opus opus-dev
+
+# Install Snapcast
+WORKDIR /code
+RUN git clone --recursive -b develop https://github.com/badaix/snapcast.git src && \
+    cd src && \
+    make
+
+From alpine
+# Copy out client and server binary
+
+COPY --from=builder /code/src/server/snapserver /usr/local/bin/
+COPY --from=builder /code/src/client/snapclient /usr/local/bin/
 
 USER root
