@@ -14,6 +14,5 @@ sleep 3
 
 avahi-daemon -D
 sleep 2
-healthz &
 
 exec "$@"

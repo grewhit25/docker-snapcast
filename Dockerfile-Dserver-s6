@@ -1,0 +1,35 @@
+FROM ubuntu:focal
+# Install snapcast server
+LABEL MAINTAINER="Greg White grewhit25@gmail.com"
+
+ARG S6_ARCH='aarch64'
+ARG S6_VERSION='2.0.0.1'
+
+# Install s6 overlay
+# https://github.com/just-containers/s6-overlay/issues/239 - S6 workaround
+ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_VERSION}/s6-overlay-${S6_ARCH}.tar.gz /tmp/s6-overlay.tar.gz
+RUN tar xzf /tmp/s6-overlay.tar.gz -C / --exclude="./bin" && \
+    tar xzf /tmp/s6-overlay.tar.gz -C /usr ./bin && \
+    rm -rf /tmp/s6-overlay.tar.gz
+
+# Install dependences
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive \
+    apt-get install -y avahi-daemon libavahi-client3 \
+    libvorbisenc2 flac libopus0  && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy in s6 and prebuilt binaries
+COPY root /
+COPY *.conf /etc/
+COPY --from=docker.io/grewhit25/debian-snapcast /usr/local/bin/snapserver /usr/local/bin/
+COPY --from=docker.io/grewhit/docker-librespot /usr/local/bin/librespot /usr/local/bin/
+
+# Snapcast Ports
+EXPOSE 1704 1705
+VOLUME /output
+
+ARG AVAHI
+RUN [ "${AVAHI:-1}" = "1" ] || (echo "Removing Avahi" && rm -rf /etc/services.d/avahi /etc/services.d/dbus)
+
+ENTRYPOINT ["/init"]

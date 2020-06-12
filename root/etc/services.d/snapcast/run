@@ -1,0 +1,8 @@
+#!/usr/bin/with-contenv sh
+
+# wait for services to come up
+sleep 2
+
+echo "Starting SnapServer..."
+
+exec snapserver --config /etc/snapserver.conf
