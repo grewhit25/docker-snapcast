@@ -38,4 +38,4 @@ jobs:
     script: *1
 after_script:
 - source ./build-images-ci.sh
-- set -ex; build-images-ci.sh::create_push_manifest; +x
+- set -ex; buildx_images_ci::create_push_manifest; +x
