@@ -1,10 +1,8 @@
 #!/usr/bin/with-contenv sh
 
-AVAHI="${AVAHI:-false}"
-if [[ "${AVAHI}" != "false" ]]; then
-	echo "Not starting Avahi Daemon"
-  rm -rf /etc/services.d/avahi /etc/services.d/dbus
-else
+AVAHI="${AVAHI:-true}"
+if [[ "${AVAHI}" == "true" ]]; then
+  echo "Enabling Avahi.."
   # make folders
   mkdir -p /var/run/dbus
   mkdir -p /var/run/avahi-daemon
@@ -22,4 +20,7 @@ else
   
   # avahi config
   cp /defaults/avahi-daemon.conf /etc/avahi/avahi-daemon.conf
+else
+  echo "Disabling Avahi"
+  rm -rf /etc/services.d/avahi /etc/services.d/dbus
 fi

@@ -4,7 +4,6 @@ LABEL MAINTAINER="Greg White grewhit25@gmail.com"
 
 ARG S6_ARCH='aarch64'
 ARG S6_VERSION='2.0.0.1'
-ARG AVAHI='true'
 
 # Install s6 overlay
 # https://github.com/just-containers/s6-overlay/issues/239 - S6 workaround
