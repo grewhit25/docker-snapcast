@@ -3,6 +3,6 @@
 # wait for services to come up
 sleep 2
 
-echo "Starting SnapServer..."
+echo "Starting Snapcast Server..."
 
 exec snapserver --config /etc/snapserver.conf
