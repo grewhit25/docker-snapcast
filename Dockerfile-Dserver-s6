@@ -1,3 +1,11 @@
+FROM golang as builder
+# Install health check
+# credit to https://github.com/meisterplan/k8s-health-check.git
+RUN go get github.com/grewhit25/k8s-health-check
+WORKDIR  /go/src/github.com/grewhit25/k8s-health-check
+RUN make build
+RUN make test
+
 FROM ubuntu:focal
 # Install snapcast server
 LABEL MAINTAINER="Greg White grewhit25@gmail.com"
@@ -23,6 +31,7 @@ RUN apt-get update && \
 # Copy in s6 and prebuilt binaries
 COPY root /
 COPY *.conf /etc/
+COPY --from=builder /go/src/github.com/grewhit25/k8s-health-check/check /usr/local/bin/
 COPY --from=docker.io/grewhit25/debian-snapcast /usr/local/bin/snapserver /usr/local/bin/
 COPY --from=docker.io/grewhit/docker-librespot /usr/local/bin/librespot /usr/local/bin/
 
