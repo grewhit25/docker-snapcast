@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv sh
 
-AVAHI="${AVAHI:-true}";
+AVAHI="${AVAHI:-false}";
 if ("${AVAHI}" == 'true'); then
   echo "Enabling Avahi.."
   # make folders
