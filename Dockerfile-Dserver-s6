@@ -9,7 +9,7 @@ RUN make test
 FROM ubuntu:focal
 # Install snapcast server
 LABEL MAINTAINER="Greg White grewhit25@gmail.com"
-
+# v0.20.1
 ARG S6_ARCH='aarch64'
 ARG S6_VERSION='2.0.0.1'
 
