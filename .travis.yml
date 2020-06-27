@@ -17,7 +17,7 @@ install:
 - set -ex; buildx_images_ci::setup_environment; set +x
 defaults:
   script: &1
-  - DOCKER_BASE=${DOCKER_REGISTRY}'/debian-snapserver'
+  - DOCKER_BASE=${DOCKER_REGISTRY}'/debian-snapclient'
   - source ./build-images-ci.sh
   - set -ex; buildx_images_ci::build_and_push_image; set +x
 jobs:
