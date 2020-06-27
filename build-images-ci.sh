@@ -147,7 +147,7 @@ function buildx_images_ci::test_all() {
 
 # Setup ci environment
 function buildx_images_ci::setup_environment() {
-  cp Dockerfile-Dserver-s6 Dockerfile.multi-arch
+  cp Dockerfile-Dclient Dockerfile.multi-arch
   buildx_images_ci::install_docker_buildx
   buildx_images_ci::login_to_docker_hub
 }
