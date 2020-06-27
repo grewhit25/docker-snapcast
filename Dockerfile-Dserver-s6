@@ -33,7 +33,7 @@ COPY root /
 COPY *.conf /etc/
 COPY --from=builder /go/src/github.com/grewhit25/k8s-health-check/check /usr/local/bin/
 COPY --from=docker.io/grewhit25/debian-snapcast /usr/local/bin/snapserver /usr/local/bin/
-COPY --from=docker.io/grewhit25/docker-librespot /usr/local/bin/librespot /usr/local/bin/
+COPY --from=docker.io/grewhit25/debian-librespot /usr/local/bin/librespot /usr/local/bin/
 
 # Snapcast Ports
 EXPOSE 1704 1705

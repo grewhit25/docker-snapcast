@@ -19,7 +19,6 @@ defaults:
   script: &1
   - DOCKER_BASE=${DOCKER_REGISTRY}'/debian-snapserver'
   - source ./build-images-ci.sh
-  - while sleep 300; do echo "still alive"; done &
   - set -ex; buildx_images_ci::build_and_push_image; set +x
 jobs:
   fast_finish: true
