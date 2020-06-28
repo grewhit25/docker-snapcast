@@ -1,4 +1,3 @@
-sudo: required
 services:
 - docker
 language: bash
@@ -30,37 +29,36 @@ install:
 - docker version
 - make prepare
 defaults:
-  env:
-  - DOCKER_BASE=${DOCKER_REGISTRY}'/debian-snapserver'
-  - DOCKERFILE='Dockerfile-Dserver-s6'
-  - IMAGE_NAME=${DOCKER_BASE}
-  script: &1
+  script: &build-image
+  - export DOCKER_BASE=${DOCKER_REGISTRY}'/debian-snapserver'
+  - export DOCKERFILE='Dockerfile-Dserver-s6'
+  - export IMAGE_NAME=${DOCKER_BASE}
   - make build-push
 jobs:
   fast_finish: true
   include:
-  - stage: build
-    env:
-    - DOCKER_PLATFORMS='linux/amd64'
-    - VERSION='amd64'
-    - S6_ARCH='amd64'
-    script: *1
-  - stage: build
-    env:
-    - DOCKER_PLATFORMS='linux/arm64'
-    - VERSION='arm64'
-    - S6_ARCH='aarch64'
-    script: *1
-  - stage: build
-    env:
-    - DOCKER_PLATFORMS='linux/arm/v7'
-    - VERSION='arm'
-    - S6_ARCH='armhf'
-    script: *1
+    - stage: build
+      env:
+      - DOCKER_PLATFORMS='linux/amd64'
+      - VERSION='amd64'
+      - S6_ARCH='amd64'
+      script: *build-image
+    - stage: build
+      env:
+      - DOCKER_PLATFORMS='linux/arm64'
+      - VERSION='arm64'
+      - S6_ARCH='aarch64'
+      script: *build-image
+    - stage: build
+      env:
+      - DOCKER_PLATFORMS='linux/arm/v7'
+      - VERSION='arm'
+      - S6_ARCH='armhf'
+      script: *build-image
 after_success:
-- BUILD_ARCH='amd64 arm64 arm'
+- export BUILD_ARCH='amd64 arm64 arm'
 - make build-manifest
-- DOCKER_PLATFORMS='linux/amd64 linux/arm64/v8 linux/arm/v7'
-- DOCKERFILE='Dockerfile-Dclient
-- IMAGE_NAME=${DOCKER_USERNAME}/debian-snapclient
+- export DOCKER_PLATFORMS='linux/amd64 linux/arm64/v8 linux/arm/v7'
+- export DOCKERFILE='Dockerfile-Dclient
+- export IMAGE_NAME=${DOCKER_USERNAME}/debian-snapclient
 - make build-push
