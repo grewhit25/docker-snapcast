@@ -30,10 +30,11 @@ install:
 - docker version
 - make prepare
 defaults:
-  script: &1
+  env:
   - DOCKER_BASE=${DOCKER_REGISTRY}'/debian-snapserver'
   - DOCKERFILE='Dockerfile-Dserver-s6'
   - IMAGE_NAME=${DOCKER_BASE}
+  script: &1
   - make build-push
 jobs:
   fast_finish: true
@@ -41,19 +42,19 @@ jobs:
   - stage: build
     env:
     - DOCKER_PLATFORMS='linux/amd64'
-    - TAGS='amd64'
+    - VERSION='amd64'
     - S6_ARCH='amd64'
     script: *1
   - stage: build
     env:
     - DOCKER_PLATFORMS='linux/arm64'
-    - TAGS='arm64'
+    - VERSION='arm64'
     - S6_ARCH='aarch64'
     script: *1
   - stage: build
     env:
     - DOCKER_PLATFORMS='linux/arm/v7'
-    - TAGS='arm'
+    - VERSION='arm'
     - S6_ARCH='armhf'
     script: *1
 after_success:
