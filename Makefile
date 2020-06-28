@@ -1,4 +1,3 @@
-
 install:
 	mkdir -vp ~/.docker/cli-plugins/ ~/dockercache
 	curl --silent -L "https://github.com/docker/buildx/releases/download/${BUILDX_VER}/buildx-${BUILDX_VER}.linux-amd64" > ~/.docker/cli-plugins/docker-buildx
@@ -18,7 +17,10 @@ build-push:
 		-t ${IMAGE_NAME}:${VERSION} \
 		-f ${DOCKERFILE} .
 
-create-push-manifest:
+build-manifest:
+	$(call create-push-manifest)
+
+define create-push-manifest
 	echo "Create manifest and push image"
   MANIFESTS=""
   for arch in ${BUILD_ARCH}; do MANIFESTS="${MANIFESTS} ${DOCKER_BASE}:${arch}"; done
@@ -35,3 +37,4 @@ create-push-manifest:
     --os 'linux' --arch ${ARCH}
   done
   docker manifest push ${DOCKER_BASE}
+endef

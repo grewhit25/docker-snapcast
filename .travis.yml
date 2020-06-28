@@ -58,7 +58,7 @@ jobs:
     script: *1
 after_success:
 - BUILD_ARCH='amd64 arm64 arm'
-- make create-push-manifest
+- make build-manifest
 - DOCKER_PLATFORMS='linux/amd64 linux/arm64/v8 linux/arm/v7'
 - DOCKERFILE='Dockerfile-Dclient
 - IMAGE_NAME=${DOCKER_USERNAME}/debian-snapclient
