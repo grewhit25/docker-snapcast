@@ -7,40 +7,16 @@ os: linux
 env:
   global:
   - TRAVIS_SECURE_ENV_VARS=true
-  - BUILD_ARCH='amd64 arm64 arm'
-  - TAGS='s6'
+  - DOCKER_PLATFORMS='linux/arm64/v8 linux/arm/v7'
+  - TAGS='latest'
   - secure: issIrN5/WwMNMPxpHRp+xdZAFpLeHPoSZtE2r6+8fbWRr/eli4fTnCECsIK7K4us2K3GbgrQ/xmvzVn8K1Kf2K5MhQUJbdveHyKk9vAJ6It1ovfB7dfRbMtQVhM7lSBVQm4XsUbX0Ki6Tna9udwzkbZOtiXUF5iV72TpVqsP2jmJFeqUKnxJdT+lcpgL7oxF0P6S1bXaLOT2Z0Aoqn/v0AbYAfy8sDcGKgRzBmPNZkmvkovxgVDsfOc7YhRSdHYv55tqmqfDiT5C12bkxR89/BSxerQL5ff365N08/SlfZZnItOcrcYFw/sr0N2DPD148teQ1sNklFzOR9I53pX8pQn8vT9zSITW+yvaejJiJY+PAHHyB+xYDEFTz2zTLJcbRVAindKdwLvDvQpy6OH+TimHRCx7wx3eLjvzB6zkeykaBjWRhSgQKoHZ3IRz8jlUr6elogHMc+oXgbSqqIX6s7MoWy8usnMoLn4DnIQKW8lP+KZCVmaIHx+Ss1+Sce3YoO4Wb4mzZhFpElgqWA3gWFrRxIPXdjsFdsEGfIE3MMbyL8l0SaqZp9k52rQCgPhiZ4Y77k7NcFASe6UvXU2uoSwgZuq8F3FZDMF8Ndk8HBHNh0a41btrdtDrzbcp2vRHYvPrWo+prEraybOz8A7s0YhlWpiV4MVsJQcFm0LnhhE=
   - secure: GBUk9udq+scxDKY4DhFJrzXF0wA2A3iMTVrB38sbYJrP8JPTa4WPQFqQK5pii72Lbj2LVK99rKggoBiqsCkpd+Hww70arf9brlX0jgHYSWfytVdffWh2XN1Nv1dnF/skFjAGT02i71jylacfq85muBFB7qGTXNtl3kndBvPEwLcG0cZADcmRhMQGPNG4umS5HqsE+fFAiE0IZq7twGSR6Q1kQy3pq76jgZF2/y621qmNohPtiQF5GOpTVEYvejBVVZq2A99HVSgrlA26cRwhVgChCuHICZcCYcDdloXoKQL4Z5b26uo8m76DgcCZ/EAeQZIFPvwPoV+BaZ4pJAPIwD4CmWjOkQ4HVM+kFAzhYqSBauqRItj80Wygi/xXE8I39Om4/MixLqHanm15rlYY0rWUCMgE7RUVrkEeZc+DEjqgEme/OR/HaoHN/HFVwa6yuk6TA5ebSJ2h1+kllc275jGYfdctjIWAA310xm1wy4fbCoF9QGD/I5MVheTTCB2lyQZNeiWUBwtZQiZ5RApT8bt31XCRZI+a3FudhkBHB8YAH/Pu9doT5URBnHLrePFidyDNgRZHFJRLXERFO14yAjDVrEmKoRa6hSVConhPb7jMjAs1WmAcTUCt6XWinrmpjxUo6gWaWAvIxstoflziTSq782JgeUOhn2ALPAL1D0k=
   - secure: A1k0db8HBQ9tiM5b6mtum1GaiX/odMOgnpVYMySs0WjpTUCCGWrP50Z3Jq9fF+FoDglvTcmISUiEQuwIvoEyDtdPUlwK5BGVwH2fETNnXlK4AysCM+eDMemkJOSh9BDPBf7Nsx91ro06OYfqM6e5YXNVZzfXuQa3VdJOLZClKx++5eamWNLM1PQxbXYBDjiF4UBVv3FTpB4jEG99Q3WHfwQ8WOX3NyUT/Ipn12sMuqGy3lte2+Bb7w86+0o23+m5DUNWt/2IFJL2njZ5jTVmRNV+wjUbsUUTYJb7gMa8AIE4e+bX1tI4+QL21GZD6Asfki5qY1xushnsWK9sSXYCre6Fh10yioHW1shOjkNsrXFKOh1ffeRbJPsCfo4VssGjW6peJpm5Hw2rSmDWxH9HI2iqvxuWQ4hW0EUZyc4W0PonDEK5LBCYHd92yNAM9O/sKpEFGjhp4mU0Nt09aPFoDP+VAG2DO9YRE0bz2gK8gUkYD4GD5wMgvMCBXNyI9PPF+ITEN+1DsPo/I909zbuCMcGPrBj45tBMU81Jjres/Wx1EnFUddvNFFKn7v462teEhwUJyRz+yLgnSn4nwdCdnBpKqUseZ6ecjO5OIOJND6lYGd+NgF4oXusg0Dyng8JRVyzJShfCTxq3CF+LUGxniqwLVH04CmDDbWy5inkRUpY=
-install:
-- source ./build-images-ci.sh
-- set -ex; buildx_images_ci::setup_environment; set +x
-defaults:
-  script: &1
-  - DOCKER_BASE=${DOCKER_REGISTRY}'/debian-snapserver'
-  - source ./build-images-ci.sh
-  - set -ex; buildx_images_ci::build_and_push_image; set +x
 jobs:
   fast_finish: true
   include:
-  - stage: build
-    env:
-    - DOCKER_PLATFORMS='linux/amd64'
-    - TAGS='amd64'
-    - S6_ARCH='amd64'
-    script: *1
-  - stage: build
-    env:
-    - DOCKER_PLATFORMS='linux/arm64'
-    - TAGS='arm64'
-    - S6_ARCH='aarch64'
-    script: *1
-  - stage: build
-    env:
-    - DOCKER_PLATFORMS='linux/arm/v7'
-    - TAGS='arm'
-    - S6_ARCH='armhf'
-    script: *1
-after_success:
-- source ./build-images-ci.sh
-- set -ex; buildx_images_ci::create_push_manifest; set +x
+  - stage: Deploy docker images
+    script:
+    - source ./buildx_ci_images.sh
+    - set -ex; setup_ci_environment::main; set +x
+    - set -ex; build_ci_images::main; set +x

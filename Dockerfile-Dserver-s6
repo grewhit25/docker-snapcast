@@ -4,7 +4,7 @@ FROM golang as builder
 RUN go get github.com/grewhit25/k8s-health-check
 WORKDIR  /go/src/github.com/grewhit25/k8s-health-check
 RUN make build
-RUN make test
+#RUN make test
 
 FROM ubuntu:focal
 # Install snapcast server
