@@ -56,8 +56,11 @@ jobs:
       - S6_ARCH='armhf'
       script: *build-image
 after_success:
+# create manifest
 - export BUILD_ARCH='amd64 arm64 arm'
-- make build-manifest
+- source ./build-images-ci.sh
+- set -ex; buildx_images_ci::create_push_manifest; set +x
+# build snapcast client
 - export DOCKER_PLATFORMS='linux/amd64 linux/arm64/v8 linux/arm/v7'
 - export DOCKERFILE='Dockerfile-Dclient
 - export IMAGE_NAME=${DOCKER_USERNAME}/debian-snapclient
