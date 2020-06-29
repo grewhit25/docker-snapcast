@@ -27,8 +27,8 @@ install:
 - make prepare
 defaults:
   script: &build-image
-  - IMAGE_NAME=${DOCKER_REGISTRY}/debian-snapserver'
-  - DOCKERFILE='Dockerfile-Dserver-s6' 
+  - export IMAGE_NAME=${DOCKER_REGISTRY}/debian-snapserver'
+  - export DOCKERFILE='Dockerfile-Dserver-s6' 
   - make build-push
 jobs:
   fast_finish: true
