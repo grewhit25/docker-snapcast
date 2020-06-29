@@ -1,64 +1,30 @@
+sudo: required
 services:
 - docker
-language: bash
+language: shell
 dist: bionic
 os: linux
 env:
   global:
   - CI_NAME=travis
-  - DOCKER_CLI_EXPERIMENTAL=enabled
-  - TRAVIS_SECURE_ENV_VARS=true
   - BUILDX_VER=v0.3.0
+  - VERSION='0.20.1'
+  - TRAVIS_SECURE_ENV_VARS=true
+  - DOCKER_CLI_EXPERIMENTAL=enabled
+  - DOCKER_PLATFORMS='linux/amd64,linux/arm64/v8,linux/arm/v7'
   - DOCKERFILE='Dockerfile-Dserver-s6'
   - IMAGE_NAME=${DOCKER_REGISTRY}/debian-snapserver'
-  - secure: YTktxwUxPWL+DiedarlclYYAy+8dsU/jU1zLvAnndt2BPDwN3RUrYs72zBeuNVUef9wC7xx5vho2qi0NegX/2vdxa2K6StCum2GC74DzIgOCIBdJneUiMIgxrEy63pIx7cjBFyDfC+Xne+Fi6IV7SAXWPSz3xQa8flCLzDx1gGFkLPntt09ut2+zo6PPIf6NjCfLD/Nj1ZcYzgr2KR1w2H+kH6Uo1fHOF8NOsn2iSIU21eHrdYwmK99odVvanIlZUyQ6udo9+5X+oPHtTSXjhNkV/sSwTJXJWxNwNG98F2LsuG12FP220PmVYlvRlPnU7vrvtdnw/ObmFrbfLH37HvdzqR8ZsPZUEHY75lo//Pr/UiUNUnv9BqUT0aFtcG8ONrIdteYgsKb2DPZLbiKwfNK6KcYSoF/X5nvKVWyNjDmGuzx+OJhHeKESUiZUF1+8DZNjIrQFmDGfR2T7xvsGi1t5BRYA1VmOb6/GG8h+RLz8thXElO6nLdBxHJdRlTwgnlzD8roXR2V8IBkvinWCdzd3tRoLfndawDeFRAdIdJ3neeHkvKOaWTYEWCTT85JqcPZjcN4u+Dppv0VdBLoYI7Zyz9cPxhNEsTAYWjp4FRVz+rl7XqXcM+IMx6r+78020RsZVXcvlHqNVs4c+L4D9E6M/Y6/sLAJPQWaQGuaIFY=
-  - secure: tdXglYqqT0JPZrAKg1ooCV3m8yd1dEfa2oOBr1pUNwJE2LUfSHa2zFyVMX/zZ0DXhNgk5RFZSXenyQesARdQDFFDG+Vl+Z/el5hhaifmITygJ0rFfZnR1UZuTdRu3IU4LvfvREVMk/7KqVlNcVsTtE98POnPFHB0s7oTLZ3amM4mfdPkc2JqZH40fYrb2UZmye3LaSeAH86UxfWNaWLV5iS7p53g3gJWcFM+omXbzD1WT6wT+C3lKkblajozFcNuPQmEWuQbqLTW3d+mgUkG8hLPfRffi0XQWZgrcJPSSD5VcoQA9SepitvoHCJVfeu6UOMSKDsYewk3CLlRQV6HqN+H7nVO7mLAMB5UpNo0SaDbjFoiZfY6ikUP2DGrSvTS89hbrzW9Bv2OFcAi/oj73wZWI6FKY2qnqvLCxbxgM9ltS1spNoFdGDHrpaAYtqdBeDSItLUkyI9AGH/qpOy5/mdRbO4ZyIKGSbniMpXDaW6xZ7/1VNblagkndFMVpmGunJMDPKeGNTV8NCKWfcQkxytm05U8GIjpYFC2BBODhexAistphdV4vD3WIX6oarvL9v0Q1dq8Kg2tTUy1MdPBRYZ5Qx/nXr5Xw4ARtqS++DIoJnCpz1W4H4b962vw3KIR64uNbVFPKkte/ujwUrTVjWeIpQYzQf6CkUr4HmvlHSM=
-  - secure: FLJDVRPRC91Wwfi34lp6WhduFh5DadNkvW/fCNNcZaHrA3JEGv3qr/y2QD8244ALcqXJ04g4q61uVfz/tzz+C91FLWAul4RgNwTjMPXkdNIOsntOmh0m7ZaQl4vVm70KCAgGYBEF0+blqzlNqzlFNqbtm9+Sh2SG+ZqOw8J1PxmW9BPCemmkeHYbnsW6lpElBD5xCuQ0zgPTkTULq0HstiIrvmsUwPGUvZFRCJNGbCni1w1K2U3nCPJIoey41bRPLKrZJ4O+kqcS8dNIficSaX0vfJzfk65ZCuZ9ZMj1OUK5QlBTWkqZQXEGXj1mD+o+yLIkA9qQ/jVor42STzzouwe7HrLNeboJxDfPLfLQQ5Bht+7QfkY9PC8xv59XFSHmLfn5YWvHpatGVjikVRzYVfk2FbCFeG41/U+dAygPogOq/cRy3wUjRSbCN+wXfpNAXNBPl5nYZF144HQ9sAjJL2LlnltRWsYp4dRC6RrXcah+aL3xLfqnZBgBf4TfSjjNIXdcPkmv2TZvc1MNm3ec7e37SPM3xqF4SrgCcISadeb1N1mD4YQCBDQ/8jQE2HS4iBHa/1mPx6M9wbIpY0Qk/MsdnM2q1S1g7PvGUtS9aqfoXGTt6HxDrqAIME+R/WlTgjtDevNitVFgvegagypMqzrZUX9hXFzvsdDPhuMNq6g=
+  - secure: issIrN5/WwMNMPxpHRp+xdZAFpLeHPoSZtE2r6+8fbWRr/eli4fTnCECsIK7K4us2K3GbgrQ/xmvzVn8K1Kf2K5MhQUJbdveHyKk9vAJ6It1ovfB7dfRbMtQVhM7lSBVQm4XsUbX0Ki6Tna9udwzkbZOtiXUF5iV72TpVqsP2jmJFeqUKnxJdT+lcpgL7oxF0P6S1bXaLOT2Z0Aoqn/v0AbYAfy8sDcGKgRzBmPNZkmvkovxgVDsfOc7YhRSdHYv55tqmqfDiT5C12bkxR89/BSxerQL5ff365N08/SlfZZnItOcrcYFw/sr0N2DPD148teQ1sNklFzOR9I53pX8pQn8vT9zSITW+yvaejJiJY+PAHHyB+xYDEFTz2zTLJcbRVAindKdwLvDvQpy6OH+TimHRCx7wx3eLjvzB6zkeykaBjWRhSgQKoHZ3IRz8jlUr6elogHMc+oXgbSqqIX6s7MoWy8usnMoLn4DnIQKW8lP+KZCVmaIHx+Ss1+Sce3YoO4Wb4mzZhFpElgqWA3gWFrRxIPXdjsFdsEGfIE3MMbyL8l0SaqZp9k52rQCgPhiZ4Y77k7NcFASe6UvXU2uoSwgZuq8F3FZDMF8Ndk8HBHNh0a41btrdtDrzbcp2vRHYvPrWo+prEraybOz8A7s0YhlWpiV4MVsJQcFm0LnhhE=
+  - secure: GBUk9udq+scxDKY4DhFJrzXF0wA2A3iMTVrB38sbYJrP8JPTa4WPQFqQK5pii72Lbj2LVK99rKggoBiqsCkpd+Hww70arf9brlX0jgHYSWfytVdffWh2XN1Nv1dnF/skFjAGT02i71jylacfq85muBFB7qGTXNtl3kndBvPEwLcG0cZADcmRhMQGPNG4umS5HqsE+fFAiE0IZq7twGSR6Q1kQy3pq76jgZF2/y621qmNohPtiQF5GOpTVEYvejBVVZq2A99HVSgrlA26cRwhVgChCuHICZcCYcDdloXoKQL4Z5b26uo8m76DgcCZ/EAeQZIFPvwPoV+BaZ4pJAPIwD4CmWjOkQ4HVM+kFAzhYqSBauqRItj80Wygi/xXE8I39Om4/MixLqHanm15rlYY0rWUCMgE7RUVrkEeZc+DEjqgEme/OR/HaoHN/HFVwa6yuk6TA5ebSJ2h1+kllc275jGYfdctjIWAA310xm1wy4fbCoF9QGD/I5MVheTTCB2lyQZNeiWUBwtZQiZ5RApT8bt31XCRZI+a3FudhkBHB8YAH/Pu9doT5URBnHLrePFidyDNgRZHFJRLXERFO14yAjDVrEmKoRa6hSVConhPb7jMjAs1WmAcTUCt6XWinrmpjxUo6gWaWAvIxstoflziTSq782JgeUOhn2ALPAL1D0k=
+  - secure: A1k0db8HBQ9tiM5b6mtum1GaiX/odMOgnpVYMySs0WjpTUCCGWrP50Z3Jq9fF+FoDglvTcmISUiEQuwIvoEyDtdPUlwK5BGVwH2fETNnXlK4AysCM+eDMemkJOSh9BDPBf7Nsx91ro06OYfqM6e5YXNVZzfXuQa3VdJOLZClKx++5eamWNLM1PQxbXYBDjiF4UBVv3FTpB4jEG99Q3WHfwQ8WOX3NyUT/Ipn12sMuqGy3lte2+Bb7w86+0o23+m5DUNWt/2IFJL2njZ5jTVmRNV+wjUbsUUTYJb7gMa8AIE4e+bX1tI4+QL21GZD6Asfki5qY1xushnsWK9sSXYCre6Fh10yioHW1shOjkNsrXFKOh1ffeRbJPsCfo4VssGjW6peJpm5Hw2rSmDWxH9HI2iqvxuWQ4hW0EUZyc4W0PonDEK5LBCYHd92yNAM9O/sKpEFGjhp4mU0Nt09aPFoDP+VAG2DO9YRE0bz2gK8gUkYD4GD5wMgvMCBXNyI9PPF+ITEN+1DsPo/I909zbuCMcGPrBj45tBMU81Jjres/Wx1EnFUddvNFFKn7v462teEhwUJyRz+yLgnSn4nwdCdnBpKqUseZ6ecjO5OIOJND6lYGd+NgF4oXusg0Dyng8JRVyzJShfCTxq3CF+LUGxniqwLVH04CmDDbWy5inkRUpY=
 addons:
   apt:
     packages:
       - docker-ce
 before_install:
 - docker run --rm --privileged multiarch/qemu-user-static:register --reset -p yes
-install:
+script:
 - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 - docker version
 - make prepare
-jobs:
-  fast_finish: true
-  include:
-    - stage: build server
-      env:
-      - DOCKER_PLATFORMS='linux/amd64'
-      - VERSION='amd64'
-      - S6_ARCH='amd64'
-      script: make build-push
-    - stage: build server
-      env:
-      - DOCKER_PLATFORMS='linux/arm64/v8'
-      - VERSION='arm64'
-      - S6_ARCH='aarch64'
-      script: make build-push
-    - stage: build server
-      env:
-      - DOCKER_PLATFORMS='linux/arm/v7'
-      - VERSION='arm'
-      - S6_ARCH='armhf'
-      script: make build-push
-    - stage: build client
-      env:
-      - VERSION=0.20.1
-      - DOCKERFILE='Dockerfile-Dclient'
-      - DOCKER_PLATFORMS='linux/amd64,linux/arm64/v8,linux/arm/v7'
-      script: make build-push
-after_success:
-# create manifest
-- export BUILD_ARCH='amd64 arm64 arm'
-- export TAGS='0.20.1'
-- source ./build-images-ci.sh
-- set -ex; buildx_images_ci::create_push_manifest; set +x
-# build snapcast client
-# - export DOCKER_PLATFORMS='linux/amd64 linux/arm64/v8 linux/arm/v7'
-# - export DOCKERFILE='Dockerfile-Dclient
-# - export IMAGE_NAME=${DOCKER_USERNAME}/debian-snapclient
-# - make build-push
+- make build-push

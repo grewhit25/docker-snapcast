@@ -13,20 +13,26 @@ LABEL MAINTAINER="Greg White grewhit25@gmail.com"
 ARG S6_ARCH='aarch64'
 ARG S6_VERSION='2.0.0.1'
 
-# Install s6 overlay
-# https://github.com/just-containers/s6-overlay/issues/239 - S6 workaround
-ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_VERSION}/s6-overlay-${S6_ARCH}.tar.gz /tmp/s6-overlay.tar.gz
-RUN tar xzf /tmp/s6-overlay.tar.gz -C / --exclude="./bin" && \
-    tar xzf /tmp/s6-overlay.tar.gz -C /usr ./bin
-
 # Install dependences
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive \
-    apt-get install -y avahi-daemon libavahi-client3 \
+    apt-get install -y wget avahi-daemon libavahi-client3 \
     libvorbisenc2 flac libopus0  && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/* /var/tmp/* && \
     mkdir /health && touch /health/healthz
+
+# Install s6 overlay
+# https://github.com/just-containers/s6-overlay/issues/239 - S6 workaround
+#ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_VERSION}/s6-overlay-${S6_ARCH}.tar.gz /tmp/s6-overlay.tar.gz
+RUN ARCH="$(uname -m)" && \
+    if [ "$ARCH" = 'armv7l' ]; then ARCH = 'armhf'; \
+    elif [ "$ARCH" = 'x86_64' ]; then ARCH = 'x86'; \
+    fi; \
+    wget -q -O /tmp/s6-overlay.tar.gz https://github.com/just-containers/s6-overlay/releases/download/v${S6_VERSION}/s6-overlay-${ARCH}.tar.gz
+RUN tar xzf /tmp/s6-overlay.tar.gz -C / --exclude="./bin" && \
+    tar xzf /tmp/s6-overlay.tar.gz -C /usr ./bin
+
 
 # Copy in s6 and prebuilt binaries
 COPY root /
