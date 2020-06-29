@@ -1,4 +1,5 @@
 FROM golang as builder
+#
 # Install health check
 # credit to https://github.com/meisterplan/k8s-health-check.git
 RUN go get github.com/grewhit25/k8s-health-check
