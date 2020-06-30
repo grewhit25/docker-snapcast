@@ -1,4 +1,7 @@
 # travis-ci
+# docker buildx create --name mybuilder
+# docker buildx use mybuilder
+
 install:
 	mkdir -vp ~/.docker/cli-plugins/ ~/dockercache
 	curl --silent -L "https://github.com/docker/buildx/releases/download/${BUILDX_VER}/buildx-${BUILDX_VER}.linux-amd64" > ~/.docker/cli-plugins/docker-buildx

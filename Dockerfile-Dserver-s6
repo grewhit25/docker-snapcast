@@ -26,7 +26,8 @@ RUN apt-get update && \
 # Install s6 overlay
 # https://github.com/just-containers/s6-overlay/issues/239 - S6 workaround
 #ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_VERSION}/s6-overlay-${S6_ARCH}.tar.gz /tmp/s6-overlay.tar.gz
-RUN ARCH="$(uname -m)" && \
+RUN set -aex; \
+    ARCH="$(uname -m)" && \
     if [ "${ARCH}" = 'armv7l' ]; then ARCH='armhf'; \
     elif [ "${ARCH}" = 'x86_64' ]; then ARCH='x86'; \
     fi; \
