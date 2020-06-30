@@ -8,10 +8,10 @@ install:
 prepare: install
 	# docker buildx create --use
 	# Instantiate docker buildx builder with multi-architecture support.
-  docker buildx create --name mybuilder
-  docker buildx use mybuilder
-  # Start up buildx and verify that all is OK.
-  docker buildx inspect --bootstrap
+	docker buildx create --name mybuilder
+	docker buildx use mybuilder
+	# Start up buildx and verify that all is OK.
+	docker buildx inspect --bootstrap
 
 prepare-old: install
 	docker context create old-style

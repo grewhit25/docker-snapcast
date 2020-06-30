@@ -11,7 +11,7 @@ env:
   - BUILDX_VER=v0.3.0
   - DOCKER_PLATFORMS='linux/amd64,linux/arm64/v8,linux/arm/v7'
   - DOCKERFILE='Dockerfile-Dserver-s6'
-  - IMAGE_NAME=${DOCKER_REGISTRY}/debian-snapserver
+  - IMAGE_NAME='grewhit25/debian-snapserver'
   - VERSION=0.20.1
   - secure: YTktxwUxPWL+DiedarlclYYAy+8dsU/jU1zLvAnndt2BPDwN3RUrYs72zBeuNVUef9wC7xx5vho2qi0NegX/2vdxa2K6StCum2GC74DzIgOCIBdJneUiMIgxrEy63pIx7cjBFyDfC+Xne+Fi6IV7SAXWPSz3xQa8flCLzDx1gGFkLPntt09ut2+zo6PPIf6NjCfLD/Nj1ZcYzgr2KR1w2H+kH6Uo1fHOF8NOsn2iSIU21eHrdYwmK99odVvanIlZUyQ6udo9+5X+oPHtTSXjhNkV/sSwTJXJWxNwNG98F2LsuG12FP220PmVYlvRlPnU7vrvtdnw/ObmFrbfLH37HvdzqR8ZsPZUEHY75lo//Pr/UiUNUnv9BqUT0aFtcG8ONrIdteYgsKb2DPZLbiKwfNK6KcYSoF/X5nvKVWyNjDmGuzx+OJhHeKESUiZUF1+8DZNjIrQFmDGfR2T7xvsGi1t5BRYA1VmOb6/GG8h+RLz8thXElO6nLdBxHJdRlTwgnlzD8roXR2V8IBkvinWCdzd3tRoLfndawDeFRAdIdJ3neeHkvKOaWTYEWCTT85JqcPZjcN4u+Dppv0VdBLoYI7Zyz9cPxhNEsTAYWjp4FRVz+rl7XqXcM+IMx6r+78020RsZVXcvlHqNVs4c+L4D9E6M/Y6/sLAJPQWaQGuaIFY=
   - secure: tdXglYqqT0JPZrAKg1ooCV3m8yd1dEfa2oOBr1pUNwJE2LUfSHa2zFyVMX/zZ0DXhNgk5RFZSXenyQesARdQDFFDG+Vl+Z/el5hhaifmITygJ0rFfZnR1UZuTdRu3IU4LvfvREVMk/7KqVlNcVsTtE98POnPFHB0s7oTLZ3amM4mfdPkc2JqZH40fYrb2UZmye3LaSeAH86UxfWNaWLV5iS7p53g3gJWcFM+omXbzD1WT6wT+C3lKkblajozFcNuPQmEWuQbqLTW3d+mgUkG8hLPfRffi0XQWZgrcJPSSD5VcoQA9SepitvoHCJVfeu6UOMSKDsYewk3CLlRQV6HqN+H7nVO7mLAMB5UpNo0SaDbjFoiZfY6ikUP2DGrSvTS89hbrzW9Bv2OFcAi/oj73wZWI6FKY2qnqvLCxbxgM9ltS1spNoFdGDHrpaAYtqdBeDSItLUkyI9AGH/qpOy5/mdRbO4ZyIKGSbniMpXDaW6xZ7/1VNblagkndFMVpmGunJMDPKeGNTV8NCKWfcQkxytm05U8GIjpYFC2BBODhexAistphdV4vD3WIX6oarvL9v0Q1dq8Kg2tTUy1MdPBRYZ5Qx/nXr5Xw4ARtqS++DIoJnCpz1W4H4b962vw3KIR64uNbVFPKkte/ujwUrTVjWeIpQYzQf6CkUr4HmvlHSM=
@@ -29,5 +29,5 @@ install:
 - make build-push
 # build client
 - export DOCKERFILE='Dockerfile-Dclient
-- export IMAGE_NAME=${DOCKER_REGISTRY}/debian-snapclient
+- export IMAGE_NAME='grewhit25/debian-snapclient'
 - make build-push
