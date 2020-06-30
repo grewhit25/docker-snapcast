@@ -11,17 +11,11 @@ FROM ubuntu:focal
 # Install snapcast server
 LABEL MAINTAINER="Greg White grewhit25@gmail.com"
 # v0.20.1
-ARG ARCH='aarch64'
 ARG S6_VERSION='2.0.0.1'
 
-# Install dependences
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive \
-    apt-get install -y wget avahi-daemon libavahi-client3 \
-    libvorbisenc2 flac libopus0  && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm -rf /tmp/* /var/tmp/* && \
-    mkdir /health && touch /health/healthz
+    apt-get install -y wget 
 
 # Install s6 overlay
 # https://github.com/just-containers/s6-overlay/issues/239 - S6 workaround
@@ -30,12 +24,19 @@ RUN set -aex; \
     ARCH="$(uname -m)" && \
     if [ "${ARCH}" = 'armv7l' ]; then ARCH='armhf'; \
     elif [ "${ARCH}" = 'x86_64' ]; then ARCH='x86'; \
-    fi; \
-    echo $ARCH; \
+    fi; echo $ARCH; \
     wget --no-check-certificate -q -O /tmp/s6-overlay.tar.gz https://github.com/just-containers/s6-overlay/releases/download/v${S6_VERSION}/s6-overlay-${ARCH}.tar.gz
 RUN tar xzf /tmp/s6-overlay.tar.gz -C / --exclude="./bin" && \
     tar xzf /tmp/s6-overlay.tar.gz -C /usr ./bin
 
+# Install dependences
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive \
+    apt-get install -y avahi-daemon libavahi-client3 \
+    libvorbisenc2 flac libopus0  && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm -rf /tmp/* /var/tmp/* && \
+    mkdir /health && touch /health/healthz
 
 # Copy in s6 and prebuilt binaries
 COPY root /
