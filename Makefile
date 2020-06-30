@@ -1,6 +1,4 @@
 # travis-ci
-# docker buildx create --name mybuilder
-# docker buildx use mybuilder
 
 install:
 	mkdir -vp ~/.docker/cli-plugins/ ~/dockercache
@@ -8,7 +6,12 @@ install:
 	chmod a+x ~/.docker/cli-plugins/docker-buildx
 
 prepare: install
-	docker buildx create --use
+	# docker buildx create --use
+	# Instantiate docker buildx builder with multi-architecture support.
+  docker buildx create --name mybuilder
+  docker buildx use mybuilder
+  # Start up buildx and verify that all is OK.
+  docker buildx inspect --bootstrap
 
 prepare-old: install
 	docker context create old-style

@@ -28,7 +28,7 @@ RUN apt-get update && \
 #ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_VERSION}/s6-overlay-${S6_ARCH}.tar.gz /tmp/s6-overlay.tar.gz
 RUN set -aex; \
     ARCH="$(uname -m)" && \
-    if [ "${ARCH}" = 'armv7l' ]; then ARCH='armhf'; \
+    if [ "${ARCH}" = 'armv7l' ]; then ARCH='arm'; \
     elif [ "${ARCH}" = 'x86_64' ]; then ARCH='x86'; \
     fi; \
     echo $ARCH; \
