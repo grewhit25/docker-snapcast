@@ -32,7 +32,7 @@ RUN set -aex; \
     elif [ "${ARCH}" = 'x86_64' ]; then ARCH='x86'; \
     fi; \
     echo $ARCH; \
-    wget -q -O /tmp/s6-overlay.tar.gz https://github.com/just-containers/s6-overlay/releases/download/v${S6_VERSION}/s6-overlay-${ARCH}.tar.gz
+    wget --no-check-certificate -q -O /tmp/s6-overlay.tar.gz https://github.com/just-containers/s6-overlay/releases/download/v${S6_VERSION}/s6-overlay-${ARCH}.tar.gz
 RUN tar xzf /tmp/s6-overlay.tar.gz -C / --exclude="./bin" && \
     tar xzf /tmp/s6-overlay.tar.gz -C /usr ./bin
 
