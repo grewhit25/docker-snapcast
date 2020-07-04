@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y \
     wget --no-check-certificate -qO /tmp/s6-overlay.tar.gz https://github.com/just-containers/s6-overlay/releases/download/v${S6_VERSION}/s6-overlay-${ARCH}.tar.gz; \
         tar xzf /tmp/s6-overlay.tar.gz -C / --exclude="./bin" && \
     tar xzf /tmp/s6-overlay.tar.gz -C /usr ./bin; \
-        apt-get autoremove wget
+        apt-get autoremove -y wget
 
 # Copy in s6 and prebuilt binaries
 COPY root /
