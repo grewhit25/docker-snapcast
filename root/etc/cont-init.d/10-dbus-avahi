@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv sh
 
-AVAHI="${AVAHI:-false}";
-if ("${AVAHI}" == 'true'); then
+ENABLEAVAHI="${ENABLEAVAHI:-true}";
+if ("${ENABLEAVAHI}" == 'true'); then
   echo "Enabling Avahi.."
   # make folders
   mkdir -p /var/run/dbus

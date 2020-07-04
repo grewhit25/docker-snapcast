@@ -1,0 +1,4 @@
+# wait for services to come up
+sleep 2
+echo "Starting Snapcast Client..."
+exec snapclient

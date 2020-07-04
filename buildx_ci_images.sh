@@ -137,6 +137,6 @@ function build_ci_images::main() {
   cp Dockerfile-Dserver-s6 Dockerfile.multi-arch
   build_ci_images::build_and_push_all
   export DOCKER_BASE=${DOCKER_REGISTRY}'/debian-snapclient'
-  cp Dockerfile-Dclient Dockerfile.multi-arch
+  cp Dockerfile-Dclient-s6 Dockerfile.multi-arch
   build_ci_images::build_and_push_all
 }

@@ -12,10 +12,6 @@ LABEL MAINTAINER="Greg White grewhit25@gmail.com"
 # v0.20.1
 ARG S6_VERSION='2.0.0.1'
 
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive \
-    apt-get install -y wget 
-
 # Install s6 overlay
 RUN apt-get update && apt-get install -y \
     wget && \
@@ -29,23 +25,17 @@ RUN apt-get update && apt-get install -y \
     tar xzf /tmp/s6-overlay.tar.gz -C /usr ./bin; \
         apt-get autoremove wget
 
-# Install dependences
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive \
-    apt-get install -y avahi-daemon libavahi-client3 \
-    libvorbisenc2 flac libopus0  && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm -rf /tmp/* /var/tmp/* && \
-    mkdir /health && touch /health/healthz
-
 # Copy in s6 and prebuilt binaries
 COPY root /
+COPY --from=docker.io/grewhit25/debian-snapcast /usr/local/bin/snapclient /usr/local/bin/
 COPY --from=builder /go/src/github.com/grewhit25/k8s-health-check/check /usr/local/bin/
-COPY --from=docker.io/grewhit25/debian-snapcast /usr/local/bin/snapserver /usr/local/bin/
-COPY --from=docker.io/grewhit25/debian-librespot /usr/local/bin/librespot /usr/local/bin/
 
-# Snapcast Ports
-EXPOSE 1704 1705
-VOLUME /output
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive \
+    apt-get install -y \
+    libasound2-plugins avahi-daemon flac \
+    apulse libopus0 libvorbis0a libsoxr0 libavahi-client3 && \
+    rm -rf /var/lib/apt/lists/* && \
+    cp /defaults/client-run /etc/services.d/snapcast/run
 
 ENTRYPOINT ["/init"]
