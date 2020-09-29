@@ -10,7 +10,7 @@ FROM ubuntu:focal
 # Install snapcast server
 LABEL MAINTAINER="Greg White grewhit25@gmail.com"
 # v0.20.1
-ARG S6_VERSION='2.0.0.1'
+ARG S6_VERSION='2.1.0.0'
 
 # Install s6 overlay
 RUN apt-get update && apt-get install -y \
