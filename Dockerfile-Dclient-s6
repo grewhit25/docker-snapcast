@@ -6,7 +6,7 @@ RUN go get github.com/grewhit25/k8s-health-check
 WORKDIR  /go/src/github.com/grewhit25/k8s-health-check
 RUN make build
 
-FROM ubuntu:focal
+FROM ubuntu:20.04
 # Install snapcast server
 LABEL MAINTAINER="Greg White grewhit25@gmail.com"
 # v0.20.1

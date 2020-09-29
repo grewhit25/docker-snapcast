@@ -6,11 +6,11 @@ RUN go get github.com/grewhit25/k8s-health-check
 WORKDIR  /go/src/github.com/grewhit25/k8s-health-check
 RUN make build
 
-FROM ubuntu:focal
+FROM ubuntu:20.04
 # Install snapcast server
 LABEL MAINTAINER="Greg White grewhit25@gmail.com"
 # v0.20.1
-ARG S6_VERSION='2.0.0.1'
+ARG S6_VERSION='2.1.0.0'
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive \
