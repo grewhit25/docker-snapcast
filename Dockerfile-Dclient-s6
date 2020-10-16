@@ -6,10 +6,10 @@ RUN go get github.com/grewhit25/k8s-health-check
 WORKDIR  /go/src/github.com/grewhit25/k8s-health-check
 RUN make build
 
-FROM ubuntu:20.04
+FROM ubuntu:focal
 # Install snapcast server
 LABEL MAINTAINER="Greg White grewhit25@gmail.com"
-# v0.20.1
+# v0.22.0
 ARG S6_VERSION='2.1.0.0'
 
 # Install s6 overlay
